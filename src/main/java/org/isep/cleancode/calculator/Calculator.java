@@ -15,51 +15,51 @@ public class Calculator {
         System.out.println(numbers);
         System.out.println(operators);
 
-        /// Faire des fonctions meme pour une seule ligne ! 
+        calculatePriorities();
+        calculateAll();
 
-        // TODO Faire une fonction
+        return numbers.get(0);
+    }
+
+    static void convertExpressionIntoSequences() {
+        double currentNumber = 0;
+
+        for (int i = 0; i < expression.length(); i++) {
+            char character = expression.charAt(i);
+
+            if (Character.isDigit(character)) {
+                currentNumber = parseNumber(character, currentNumber);
+
+            } else {
+                numbers.add(currentNumber);
+                currentNumber = 0;
+                operators.add(character);
+            }
+        }
+
+        // Add the last number to the list
+        if (Character.isDigit(expression.charAt(expression.length() - 1))) {
+            numbers.add(currentNumber);
+        }
+    }
+
+    static double parseNumber(char character, double currentNumber) {
+        return currentNumber * 10 + Character.getNumericValue(character);
+    }
+
+    static void calculatePriorities() {
         for (int i = 0; i < operators.size(); i++) {
             if (operators.get(i) == '*' || operators.get(i) == '/') {
                 calcul(i);
                 i--;
             }
         }
+    }
 
-        // TODO Faire une fonction
+    static void calculateAll() {
         while (!operators.isEmpty()) {
             calcul(0);
         }
-
-        return numbers.get(0);
-    }
-
-    static void convertExpressionIntoSequences() {
-        double newNumber = 0;
-
-        for (int i = 0; i < expression.length(); i++) {
-            char character = expression.charAt(i);
-
-            if (Character.isDigit(character)) {
-                // TODO Faire une fonction pour le parsing
-                newNumber = newNumber * 10 + Character.getNumericValue(character);
-                // Add the last number to the list
-                if (i == expression.length() - 1) {
-                    numbers.add(newNumber);
-                }
-
-            } else {
-
-                // TODO Faire une fonction
-                numbers.add(newNumber);
-                newNumber = 0;
-
-                operators.add(character);
-            }
-        }
-    }
-
-    static void isDigit(char character, double newNumber) {
-
     }
 
     static void calcul(int i) {
